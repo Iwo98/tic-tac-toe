@@ -2,34 +2,26 @@ import React, {useState} from "react";
 import styles from './Board.module.scss';
 import Square from "../Square/Square";
 
-const Board = ({win, passWin, nextMove, passNextMove}) => {
+const Board = ({win, passWin, currentPlayer, passCurrentPlayer, passWinLine}) => {
 
-    const [valuesArray, setValuesArray] = useState(["","","","","","","","","",])
+    const [valuesArray, setValuesArray] = useState(["", "", "", "", "", "", "", "", "",])
 
-    const playFn = (X) => {
-        // 'X' tkaka nazwa w ogóle nie informuje czym jest ten argument
-        setValuesArray((prevState) => {
-            prevState[X] = nextMove;
-            winCheck(nextMove);
-            return [...prevState]
-        });
+    const playFn = (indexOfBox) => {
 
-        // ja bym powyszą funkcje zpisał tak jak niżej, to pozwala uniknąć modyfikowania argumentu funkcji,
-        // co jest uznawane za złą praktykę
-        // setValuesArray((prevState) => {
-        //     const newState = [...prevState][X] = nextMove;
-        //     winCheck(nextMove);
-        //     return newState
-        // });
+        const newState = [...valuesArray];
+        newState[indexOfBox] = currentPlayer;
 
-        passNextMove(prevState => prevState === "X" ? "O" : "X")
+        winCheck(currentPlayer, newState);
+        setValuesArray(newState);
+
+        passCurrentPlayer(prevState => prevState === "X" ? "O" : "X");
     }
 
     const winFn = () => {
         console.log("Juz przegrałes")
     }
 
-    const winCheck = (figure) => {
+    const winCheck = (figure, arrayOfValues) => {
 
         const winLines = [
             [0, 1, 2],
@@ -42,29 +34,29 @@ const Board = ({win, passWin, nextMove, passNextMove}) => {
             [2, 4, 6],
         ]
 
-        for (let i = 0 ; i < winLines.length; i++) {
-            // poniższą linijkę warto rozbić na 3 linje
-           if ( (valuesArray[winLines[i][0]] === figure) && (valuesArray[winLines[i][1]] === figure) && (valuesArray[winLines[i][2]] === figure)) {
+        for (let i = 0; i < winLines.length; i++) {
+            if ((arrayOfValues[winLines[i][0]] === figure) &&
+                (arrayOfValues[winLines[i][1]] === figure) &&
+                (arrayOfValues[winLines[i][2]] === figure)
+            ) {
                 passWin(true);
-               break;
-           }
+                passWinLine(i)
+                break;
+            }
         }
-
-
     }
 
     return (
-        <div className={styles.board} >
-            {valuesArray.map((item, indexOfItem) =>
-                <Square
-                    onClick={() => {
-                        // w poniższej linijce najbardziej curly nawiasy nie są potrzebne
-                        {win !==true ? playFn(indexOfItem) : winFn()}
-                    }}
-                    value={item}
-                />
-            )}
-        </div>
+            <div className={styles.board}>
+                {valuesArray.map((item, indexOfItem) =>
+                    <Square
+                        onClick={() => {
+                            win !== true ? playFn(indexOfItem) : winFn()
+                        }}
+                        value={item}
+                    />
+                )}
+            </div>
     )
 }
 
