@@ -5,20 +5,18 @@ import styles from './Game.module.scss';
 
 const Game = () => {
     const [win, setWin] = useState(false);
-    //  nextMove bez kontekstu to nie jest jasną nazwą, lepsze było by np. currentPlayer
-    //  to by ułatwiło by czytanie kodu wewnątrz Board
-    const [nextMove, setNextMove] = useState("X");
+    const [currentPlayer, setCurrentPlayer] = useState("X");
 
   return (
          <div className={styles.game}>
-             {win === false ? <h2>Next player: {nextMove}</h2> : <h2>It's Over </h2>}
+             {win === false ? <h2>Next player: {currentPlayer}</h2> : <h2>It's Over </h2>}
              <Board
                  passWin={setWin}
                  win={win}
-                 passNextMove={setNextMove}
-                 nextMove={nextMove}
+                 passCurrentPlayer={setCurrentPlayer}
+                 currentPlayer={currentPlayer}
              />
-             {win &&  <h2>Player {nextMove === "X" ? "0" : "X"} won</h2> }
+             {win &&  <h2>Player {currentPlayer === "X" ? "0" : "X"} won</h2> }
          </div>
   );
 }

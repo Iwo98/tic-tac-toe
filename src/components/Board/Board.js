@@ -2,35 +2,26 @@ import React, {useState} from "react";
 import styles from './Board.module.scss';
 import Square from "../Square/Square";
 
-const Board = ({win, passWin, nextMove, passNextMove}) => {
+const Board = ({win, passWin, currentPlayer, passCurrentPlayer}) => {
 
     const [valuesArray, setValuesArray] = useState(["","","","","","","","","",])
 
-    const playFn = (X) => {
-        // 'X' tkaka nazwa w ogóle nie informuje czym jest ten argument
-        setValuesArray((prevState) => {
-            prevState[X] = nextMove;
-            winCheck(nextMove);
-            return [...prevState]
-        });
+    const playFn = (indexOfBox) => {
 
-        // ja bym powyszą funkcje zpisał tak jak niżej, to pozwala uniknąć modyfikowania argumentu funkcji,
-        // co jest uznawane za złą praktykę
-        // setValuesArray((prevState) => {
-        //     const newState = [...prevState][X] = nextMove;
-        //     winCheck(nextMove);
-        //     return newState
-        // });
+        const newState = [...valuesArray];
+        newState[indexOfBox] = currentPlayer;
+        //Pomogło przesłanie tablicy jako kolejny argument funkcji
+        winCheck(currentPlayer,newState);
+        setValuesArray(newState);
 
-        passNextMove(prevState => prevState === "X" ? "O" : "X")
+        passCurrentPlayer(prevState => prevState === "X" ? "O" : "X")
     }
 
     const winFn = () => {
         console.log("Juz przegrałes")
     }
 
-    const winCheck = (figure) => {
-
+    const winCheck = (figure, arrayOfValues) => {
         const winLines = [
             [0, 1, 2],
             [3, 4, 5],
@@ -43,14 +34,15 @@ const Board = ({win, passWin, nextMove, passNextMove}) => {
         ]
 
         for (let i = 0 ; i < winLines.length; i++) {
-            // poniższą linijkę warto rozbić na 3 linje
-           if ( (valuesArray[winLines[i][0]] === figure) && (valuesArray[winLines[i][1]] === figure) && (valuesArray[winLines[i][2]] === figure)) {
+           if (
+               (arrayOfValues[winLines[i][0]] === figure) &&
+               (arrayOfValues[winLines[i][1]] === figure) &&
+               (arrayOfValues[winLines[i][2]] === figure)
+           ) {
                 passWin(true);
                break;
            }
         }
-
-
     }
 
     return (
@@ -58,8 +50,7 @@ const Board = ({win, passWin, nextMove, passNextMove}) => {
             {valuesArray.map((item, indexOfItem) =>
                 <Square
                     onClick={() => {
-                        // w poniższej linijce najbardziej curly nawiasy nie są potrzebne
-                        {win !==true ? playFn(indexOfItem) : winFn()}
+                        win !==true ? playFn(indexOfItem) : winFn()
                     }}
                     value={item}
                 />
