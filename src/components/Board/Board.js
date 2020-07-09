@@ -40,6 +40,8 @@ const Board = ({win, passWin, nextMove, passNextMove}) => {
                break;
            }
         }
+
+
     }
 
     return (
