@@ -4,8 +4,9 @@ import styles from './Game.module.scss';
 
 
 const Game = () => {
-
     const [win, setWin] = useState(false);
+    //  nextMove bez kontekstu to nie jest jasną nazwą, lepsze było by np. currentPlayer
+    //  to by ułatwiło by czytanie kodu wewnątrz Board
     const [nextMove, setNextMove] = useState("X");
 
   return (
