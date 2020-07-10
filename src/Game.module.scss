@@ -58,6 +58,10 @@
     height: 3px;
     background: black;
     animation: winning 0.5s both ease-in-out;
+
+    :global(&--zero){
+        background: crimson;
+    }
 }
 
 .winLine0 {
