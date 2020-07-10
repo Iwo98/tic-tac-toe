@@ -34,7 +34,7 @@ const Game = () => {
             <div className={styles.game}>
                 {win === false ? <h2>Next player: {currentPlayer}</h2> : <h2 className={styles.ending}>It's Over </h2>}
                 {win === false ? false :
-                    <div className={styles.winLine + " winLinezero"}></div>}
+                    <div className={classNameForLine}></div>}
                 <Board
                     passWin={setWin}
                     win={win}
