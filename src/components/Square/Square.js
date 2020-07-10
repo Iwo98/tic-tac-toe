@@ -3,10 +3,6 @@ import styles from './Square.module.scss';
 
 
 const Square = ({value="",onClick,disable}) => {
-
-
-
-
     return (
             <button
                 className={styles.square}
@@ -17,7 +13,6 @@ const Square = ({value="",onClick,disable}) => {
                 {value}
             </button>
     )
-
 };
 
 export default Square;
