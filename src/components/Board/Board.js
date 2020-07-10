@@ -2,19 +2,19 @@ import React, {useState} from "react";
 import styles from './Board.module.scss';
 import Square from "../Square/Square";
 
-const Board = ({win, passWin, currentPlayer, passCurrentPlayer}) => {
+const Board = ({win, passWin, currentPlayer, passCurrentPlayer, passWinLine}) => {
 
-    const [valuesArray, setValuesArray] = useState(["","","","","","","","","",])
+    const [valuesArray, setValuesArray] = useState(["", "", "", "", "", "", "", "", "",])
 
     const playFn = (indexOfBox) => {
 
         const newState = [...valuesArray];
         newState[indexOfBox] = currentPlayer;
-        //Pomogło przesłanie tablicy jako kolejny argument funkcji
-        winCheck(currentPlayer,newState);
+
+        winCheck(currentPlayer, newState);
         setValuesArray(newState);
 
-        passCurrentPlayer(prevState => prevState === "X" ? "O" : "X")
+        passCurrentPlayer(prevState => prevState === "X" ? "O" : "X");
     }
 
     const winFn = () => {
@@ -22,6 +22,7 @@ const Board = ({win, passWin, currentPlayer, passCurrentPlayer}) => {
     }
 
     const winCheck = (figure, arrayOfValues) => {
+
         const winLines = [
             [0, 1, 2],
             [3, 4, 5],
@@ -33,29 +34,29 @@ const Board = ({win, passWin, currentPlayer, passCurrentPlayer}) => {
             [2, 4, 6],
         ]
 
-        for (let i = 0 ; i < winLines.length; i++) {
-           if (
-               (arrayOfValues[winLines[i][0]] === figure) &&
-               (arrayOfValues[winLines[i][1]] === figure) &&
-               (arrayOfValues[winLines[i][2]] === figure)
-           ) {
+        for (let i = 0; i < winLines.length; i++) {
+            if ((arrayOfValues[winLines[i][0]] === figure) &&
+                (arrayOfValues[winLines[i][1]] === figure) &&
+                (arrayOfValues[winLines[i][2]] === figure)
+            ) {
                 passWin(true);
-               break;
-           }
+                passWinLine(i)
+                break;
+            }
         }
     }
 
     return (
-        <div className={styles.board} >
-            {valuesArray.map((item, indexOfItem) =>
-                <Square
-                    onClick={() => {
-                        win !==true ? playFn(indexOfItem) : winFn()
-                    }}
-                    value={item}
-                />
-            )}
-        </div>
+            <div className={styles.board}>
+                {valuesArray.map((item, indexOfItem) =>
+                    <Square
+                        onClick={() => {
+                            win !== true ? playFn(indexOfItem) : winFn()
+                        }}
+                        value={item}
+                    />
+                )}
+            </div>
     )
 }
 

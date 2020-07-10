@@ -1,5 +1,105 @@
+
+@keyframes slideUp {
+    0%{
+        top: 350px;
+        opacity: 0;
+    }
+
+    100%{
+        top: 240px;
+        opacity: 1;
+    }
+}
+
+@keyframes winning {
+    0%{
+        width: 0;
+        opacity: 0;
+    }
+    100%{
+        width: 210px;
+        opacity: 1;
+    }
+}
+
+@keyframes showUp {
+    0%{
+
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+
 .game {
     display: flex;
     align-items: center;
     flex-direction: column;
+    position: relative;
+}
+
+.playerWins {
+    position: absolute;
+    color: darkcyan;
+    animation: slideUp 0.5s both 0.5s ease-out;
+}
+
+.ending {
+    color: crimson;
+    animation: showUp 0.5s both ease-in;
+}
+
+.winLine {
+    top:152px;
+    position: absolute;
+    width: 210px;
+    height: 3px;
+    background: black;
+    animation: winning 0.5s both ease-in-out;
+
+    :global(&--zero){
+        background: crimson;
+    }
+}
+
+.winLine0 {
+    @extend .winLine;
+    top:97px;
+}
+
+.winLine1 {
+    @extend .winLine;
+}
+
+.winLine2 {
+    @extend .winLine;
+    top:209px;
+}
+.winLine3 {
+    @extend .winLine;
+    left:38.2%;
+    width: 200px;
+    transform: rotate(90deg);
+}
+.winLine4 {
+    @extend .winLine;
+    left:42.3%;
+    width: 200px;
+    transform: rotate(90deg);
+}
+.winLine5 {
+    @extend .winLine;
+    left:46.3%;
+    width: 200px;
+    transform: rotate(90deg);
+}
+.winLine6 {
+    @extend .winLine;
+    transform: rotate(45deg);
+}
+.winLine7 {
+    @extend .winLine;
+    transform: rotate(135deg);
 }
