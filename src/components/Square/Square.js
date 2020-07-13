@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import styles from './Square.module.scss';
 
 
-const Square = ({ value, onClickFn, win }) => (
+const Square = ({ value, playFn, win }) => (
   <button
     className={styles.square}
     type="button"
-    onClick={onClickFn}
+    onClick={playFn}
     disabled={value !== '' || win === true}
   >
     {value}
@@ -16,7 +16,7 @@ const Square = ({ value, onClickFn, win }) => (
 
 Square.propTypes = {
   value: PropTypes.string,
-  onClickFn: PropTypes.func.isRequired,
+  playFn: PropTypes.func.isRequired,
   win: PropTypes.bool.isRequired,
 };
 
