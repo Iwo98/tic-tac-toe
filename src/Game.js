@@ -9,6 +9,15 @@ const Game = () => {
   const [currentPlayer, setCurrentPlayer] = useState('X');
   const [valuesArray, setValuesArray] = useState(['', '', '', '', '', '', '', '', '']);
 
+  const CurrentlyPlayingUserLabel = () => (
+    win === false ? (
+      <h2>
+        {`Next player: ${currentPlayer}`}
+      </h2>
+    ) : <h2 className={styles.ending}>It is Over </h2>
+  );
+
+
   const winCheck = (figure, arrayOfValues) => {
     const winLines = [
       [0, 1, 2],
@@ -46,14 +55,8 @@ const Game = () => {
   return (
     <>
       <div className={styles.game}>
-        {win === false ? (
-          <h2>
-            Next player:
-            {` ${currentPlayer}`}
-          </h2>
-        ) : <h2 className={styles.ending}>It is Over </h2>}
-        {win === false ? false
-          : <div className={`winningLine __${winLine}`} />}
+        <CurrentlyPlayingUserLabel />
+        {win === false ? false : <div className={`winningLine __${winLine}`} />}
         <Board
           win={win}
           valuesArray={valuesArray}
@@ -61,10 +64,7 @@ const Game = () => {
         />
         {win && (
           <h2 className={styles.playerWins}>
-            Player
-            {currentPlayer === 'X' ? ' 0 ' : ' X '}
-            {' '}
-            won
+            {`Player ${currentPlayer === 'X' ? ' O ' : ' X '} won`}
           </h2>
         )}
       </div>
