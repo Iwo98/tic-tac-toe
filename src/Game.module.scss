@@ -1,5 +1,102 @@
-.game {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+@keyframes slideUp {
+  0% {
+    top: 350px;
+    opacity: 0;
+  }
+
+  100% {
+    top: 240px;
+    opacity: 1;
+  }
 }
+
+@keyframes :global(winning) {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  100% {
+    width: 210px;
+    opacity: 1;
+  }
+}
+
+@keyframes showUp {
+  0% {
+
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.game {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.playerWins {
+  position: absolute;
+  color: darkcyan;
+  animation: slideUp 0.5s both 0.5s ease-out;
+}
+
+.ending {
+  color: crimson;
+  animation: showUp 0.5s both ease-in;
+}
+
+:global .winningLine {
+  top: 152px;
+  position: absolute;
+  width: 210px;
+  height: 3px;
+  background: black;
+  :global {
+    animation: winning 0.5s both ease-in-out;
+  }
+}
+
+:global .__0 {
+  @extend .winningLine;
+  top: 97px;
+}
+
+:global .__1 {
+}
+
+:global .__2 {
+  top: 209px;
+}
+
+:global .__3 {
+  left: 34.2%;
+  width: 200px;
+  transform: rotate(90deg);
+}
+
+:global .__4 {
+  left: 39.6%;
+  width: 200px;
+  transform: rotate(90deg);
+}
+
+:global .__5 {
+  left: 45.1%;
+  width: 200px;
+  transform: rotate(90deg);
+}
+
+:global .__6 {
+  transform: rotate(45deg);
+}
+
+:global .__7 {
+  transform: rotate(135deg);
+}
+
+
+
